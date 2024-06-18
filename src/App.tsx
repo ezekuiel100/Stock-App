@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import Nav from "./components/Nav";
 import StockCard from "./components/StockCard";
 
-const token = "b7SmPDtyimU6g4mcvSHTi3";
-
 function App() {
   const [stock, setStock] = useState(null);
   const [limit, setLimit] = useState(24);
 
   useEffect(() => {
-    const url = `https://brapi.dev/api/quote/list?&sortBy=volume&sortOrder=desc&limit=${limit}&token=${token}`;
+    const url = `https://brapi.dev/api/quote/list?&sortBy=volume&sortOrder=desc&limit=${limit}&token=${
+      import.meta.env.VITE_TOKEN
+    }`;
 
     async function fetchData() {
       try {
