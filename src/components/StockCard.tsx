@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 type Stock = {
   stock: string;
   logo: string;
@@ -18,17 +20,16 @@ function StockCard({ stock, setLimit }: StockProps) {
     <div className="pb-10">
       <div className=" grid md:grid-cols-2 gap-10 lg:grid-cols-3 max-w-[65rem] drop-shadow p-10">
         {stock.map(({ stock, logo, name, close }, i) => (
-          <div
-            className="bg-white w-64 px-4 py-6 rounded-xl flex items-center mx-auto gap-4 cursor-pointer "
-            key={i}
-          >
-            <img src={logo} className="mt-2 text-center h-16 "></img>
-            <div>
-              <p className="font-bold text-lg text-center">{stock}</p>
-              <p className="text-gray-600 text-sm font-semibold">{name}</p>
-              <p className="font-semibold text-gray-600 ">R$ {close}</p>
+          <Link to={`/${stock}`} key={i}>
+            <div className="bg-white w-64 px-4 py-6 rounded-xl flex items-center mx-auto gap-4 cursor-pointer ">
+              <img src={logo} className="mt-2 text-center h-16 "></img>
+              <div>
+                <p className="font-bold text-lg text-center">{stock}</p>
+                <p className="text-gray-600 text-sm font-semibold">{name}</p>
+                <p className="font-semibold text-gray-600 ">R$ {close}</p>
+              </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
       <div>

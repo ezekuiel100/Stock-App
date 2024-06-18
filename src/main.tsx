@@ -11,7 +11,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="/stock" element={<Stock />} />
+        <Route path="/:stockId" element={<Stock />} />
         <Route path="*" element={<NoPage />} />
       </Routes>
     </BrowserRouter>
