@@ -1,12 +1,5 @@
 import { Link } from "react-router-dom";
-
-type Stock = {
-  stock: string;
-  logo: string;
-  symbol: string;
-  name: string;
-  close: string;
-};
+import { Stock } from "../App";
 
 type StockProps = {
   stock: Stock[] | null;

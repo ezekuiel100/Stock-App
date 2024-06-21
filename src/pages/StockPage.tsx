@@ -20,18 +20,19 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  elements
 );
 
 // const url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stockName}.sa&outputsize=compact&apikey=import.meta.env.VITE_KEY`;
 
 function StockPage() {
-  const { stockName } = useParams();
-  const [stockData, setStockData] = useState(null);
+  // const { stockName } = useParams();
+  const [stockData, setStockData] = useState<string | null>(null);
 
-  let labels;
-  let values;
-  let filteredDates = [];
+  let labels: string[];
+  let values: string[];
+  let filteredDates: string[] = [];
 
   if (stockData) {
     labels = Object.keys(stockData);
