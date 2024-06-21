@@ -3,7 +3,6 @@ import Nav from "./components/Nav";
 import StockCard from "./components/StockCard";
 import { useQuery } from "@tanstack/react-query";
 import CircularProgress from "@mui/material/CircularProgress";
-import { Box } from "@mui/material";
 
 export type Stock = {
   stock: string;
@@ -28,7 +27,7 @@ function App() {
   const [limit, setLimit] = useState<number>(24);
 
   const { data, isPending } = useQuery({
-    queryKey: ["stocks"],
+    queryKey: ["stocks", limit],
     queryFn: () => fetchData(limit),
   });
 
@@ -36,13 +35,12 @@ function App() {
     <div className="bg-gray-100 min-h-screen">
       <Nav />
       <div className="flex justify-center">
-        {isPending ? (
+        {isPending && (
           <div className="flex items-center h-screen">
-            <CircularProgress />{" "}
+            <CircularProgress />
           </div>
-        ) : (
-          <StockCard stock={data?.stocks} setLimit={setLimit} />
         )}
+        <StockCard stock={data?.stocks} setLimit={setLimit} />
       </div>
     </div>
   );

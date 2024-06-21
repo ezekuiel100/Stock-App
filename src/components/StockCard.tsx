@@ -27,7 +27,7 @@ function StockCard({ stock, setLimit }: StockProps) {
       </div>
       <div>
         <button
-          onClick={() => setLimit((limit) => limit + 10)}
+          onClick={() => setLimit((limit) => limit + 14)}
           className="p-2 text-lg text-blue-400 inline-block w-[100%] bg-gray-100 hover:bg-gray-200"
         >
           Ver mais ativos
