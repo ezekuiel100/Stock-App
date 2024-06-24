@@ -24,10 +24,10 @@ ChartJS.register(
   elements
 );
 
-// const url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stockName}.sa&outputsize=compact&apikey=import.meta.env.VITE_KEY`;
+const KEY = "import.meta.env.VITE_KEY";
 
 function StockPage() {
-  // const { stockName } = useParams();
+  const { stockName } = useParams();
   const [stockData, setStockData] = useState<string | null>(null);
 
   let labels: string[];
@@ -51,17 +51,8 @@ function StockPage() {
 
   const options = {
     responsive: true,
-    plugins: {
-      legend: {
-        position: "top" as const,
-      },
-      title: {
-        display: true,
-        text: "Chart.js Line Chart",
-      },
-    },
     elements: {
-      point: { radius: 0 },
+      point: { radius: 2 },
     },
   };
 
@@ -69,17 +60,41 @@ function StockPage() {
     labels: filteredDates.reverse(),
     datasets: [
       {
-        label: "Dataset 1",
+        label: "Price",
         data: values?.reverse(),
         borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        backgroundColor: "rgba(255, 90, 130, 0.5)",
       },
     ],
   };
 
   useEffect(() => {
+    async function fetchStockData() {
+      const res = await fetch(
+        `https://www.alphavantage.co/query?function=OVERVIEW&symbol=PETR4.sa&apikey=${KEY}`
+      );
+      const data = await res.json();
+      console.log(data);
+    }
+    fetchStockData();
+  }, []);
+
+  useEffect(() => {
+    async function fetchIncomeStatement() {
+      const res = await fetch(
+        `https://www.alphavantage.co/query?function=INCOME_STATEMENT&symbol=PETR4.sa&apikey=${KEY}`
+      );
+      const data = await res.json();
+      console.log(data);
+    }
+    fetchIncomeStatement();
+  }, []);
+
+  useEffect(() => {
     async function fetchStock() {
-      const res = await fetch("src/data.json");
+      const res = await fetch(
+        `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stockName}.sa&outputsize=compact&apikey=import.meta.env.VITE_KEY`
+      );
       const data = await res.json();
       setStockData(data["Time Series (Daily)"]);
     }
@@ -87,7 +102,11 @@ function StockPage() {
     fetchStock();
   }, []);
 
-  return <div>{<Line data={data} options={options} />}</div>;
+  return (
+    <div className="h-96 w-[40rem]">
+      {<Line data={data} options={options} />}
+    </div>
+  );
 }
 
 export default StockPage;
