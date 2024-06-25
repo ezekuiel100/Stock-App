@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Nav from "./components/Nav";
 import StockCard from "./components/StockCard";
 import { useQuery } from "@tanstack/react-query";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -33,7 +32,6 @@ function App() {
 
   return (
     <div className="bg-gray-100 min-h-screen">
-      <Nav />
       <div className="flex justify-center">
         {isPending && (
           <div className="flex items-center h-screen">

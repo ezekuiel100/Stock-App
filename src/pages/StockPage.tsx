@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -12,6 +12,7 @@ import {
   Legend,
   elements,
 } from "chart.js";
+import BalanceTable from "../components/BalanceTable";
 
 ChartJS.register(
   CategoryScale,
@@ -24,10 +25,10 @@ ChartJS.register(
   elements
 );
 
-const KEY = "import.meta.env.VITE_KEY";
+// const KEY = "import.meta.env.VITE_KEY";
 
 function StockPage() {
-  const { stockName } = useParams();
+  // const { stockName } = useParams();
   const [stockData, setStockData] = useState<string | null>(null);
 
   let labels: string[];
@@ -36,7 +37,7 @@ function StockPage() {
 
   if (stockData) {
     labels = Object.keys(stockData);
-    values = Object.values(stockData).map((value) => value["4. close"]);
+    values = Object.values(stockData).map((value: any) => value["4. close"]);
 
     const interval = 5;
 
@@ -68,33 +69,18 @@ function StockPage() {
     ],
   };
 
-  useEffect(() => {
-    async function fetchStockData() {
-      const res = await fetch(
-        `https://www.alphavantage.co/query?function=OVERVIEW&symbol=PETR4.sa&apikey=${KEY}`
-      );
-      const data = await res.json();
-      console.log(data);
-    }
-    fetchStockData();
-  }, []);
-
-  useEffect(() => {
-    async function fetchIncomeStatement() {
-      const res = await fetch(
-        `https://www.alphavantage.co/query?function=INCOME_STATEMENT&symbol=PETR4.sa&apikey=${KEY}`
-      );
-      const data = await res.json();
-      console.log(data);
-    }
-    fetchIncomeStatement();
-  }, []);
+  // useEffect(() => {
+  //   async function fetchStockData() {
+  //     const res = await fetch(`src/stockInfo.json`);
+  //     const data = await res.json();
+  //     console.log(data);
+  //   }
+  //   fetchStockData();
+  // }, []);
 
   useEffect(() => {
     async function fetchStock() {
-      const res = await fetch(
-        `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stockName}.sa&outputsize=compact&apikey=import.meta.env.VITE_KEY`
-      );
+      const res = await fetch(`src/data/data.json`);
       const data = await res.json();
       setStockData(data["Time Series (Daily)"]);
     }
@@ -103,8 +89,9 @@ function StockPage() {
   }, []);
 
   return (
-    <div className="h-96 w-[40rem]">
-      {<Line data={data} options={options} />}
+    <div className=" w-[40rem] space-y-14 mx-auto">
+      <Line data={data} options={options} />
+      <BalanceTable />
     </div>
   );
 }

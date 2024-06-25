@@ -6,6 +6,7 @@ import "./index.css";
 import StockPage from "./pages/StockPage.tsx";
 import NoPage from "./pages/NoPage.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Nav from "./components/Nav.tsx";
 
 const queryClient = new QueryClient();
 
@@ -13,6 +14,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
+        <Nav />
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/:stockName" element={<StockPage />} />
