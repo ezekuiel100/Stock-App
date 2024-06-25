@@ -29,7 +29,7 @@ function BalanceTable() {
 
   return (
     <Table>
-      <TableHeader>
+      <TableHeader className="">
         <TableRow>
           <TableHead className="">Ano</TableHead>
           <TableHead className="">Receita</TableHead>
@@ -40,8 +40,8 @@ function BalanceTable() {
 
       {data.map(({ fiscalDateEnding, totalRevenue, ebitda, netIncome }, i) => (
         <TableBody key={i}>
-          <TableRow>
-            <TableCell className="font-medium">
+          <TableRow className="border-4 border-indigo-500 ">
+            <TableCell className="font-medium border b-2-black">
               {fiscalDateEnding.slice(0, 4)}
             </TableCell>
             <TableCell className="font-medium">
