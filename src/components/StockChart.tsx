@@ -11,6 +11,7 @@ import {
   Tooltip,
   Legend,
   elements,
+  scales,
 } from "chart.js";
 
 ChartJS.register(
@@ -21,7 +22,8 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  elements
+  elements,
+  scales
 );
 
 type Props = {
@@ -31,21 +33,12 @@ type Props = {
 function StockChart({ stockData }: Props) {
   let labels: string[] = [];
   let values: string[] = [];
-  let filteredDates: string[] = [];
 
   if (stockData) {
-    labels = Object.keys(stockData);
-    values = Object.values(stockData).map((value: any) => value["4. close"]);
-
-    const interval = 5;
-
-    labels.forEach((label, index) => {
-      if (index % interval == 0) {
-        filteredDates.push(label);
-      } else {
-        filteredDates.push("");
-      }
-    });
+    labels = Object.keys(stockData).reverse();
+    values = Object.values(stockData)
+      .map((value: any) => value["4. close"])
+      .reverse();
   }
 
   const options = {
@@ -53,21 +46,31 @@ function StockChart({ stockData }: Props) {
     elements: {
       point: { radius: 2 },
     },
+    scales: {
+      x: {
+        ticks: {
+          callback: function (val: number, index: number) {
+            // Mostra a cada 5 rótulos
+            return index % 5 === 0 ? this.getLabelForValue(val) : "";
+          },
+        },
+      },
+    },
   };
 
   const data = {
-    labels: filteredDates.reverse(),
+    labels: labels,
     datasets: [
       {
-        label: "Price",
-        data: values?.reverse(),
+        label: "Cotação",
+        data: values,
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 90, 130, 0.5)",
       },
     ],
   };
 
-  return <Line data={data} options={options} />;
+  return <Line data={data} options={options} className="bg-white" />;
 }
 
 export default StockChart;

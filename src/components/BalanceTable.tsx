@@ -28,8 +28,8 @@ function BalanceTable() {
   }, []);
 
   return (
-    <Table>
-      <TableHeader className="">
+    <Table className="mb-28 bg-white">
+      <TableHeader className="border-2">
         <TableRow>
           <TableHead className="">Ano</TableHead>
           <TableHead className="">Receita</TableHead>
@@ -39,24 +39,24 @@ function BalanceTable() {
       </TableHeader>
 
       {data.map(({ fiscalDateEnding, totalRevenue, ebitda, netIncome }, i) => (
-        <TableBody key={i}>
-          <TableRow className="border-4 border-indigo-500 ">
-            <TableCell className="font-medium border b-2-black">
+        <TableBody key={i} className="border-2">
+          <TableRow className=" ">
+            <TableCell className="font-medium ">
               {fiscalDateEnding.slice(0, 4)}
             </TableCell>
-            <TableCell className="font-medium">
+            <TableCell className="font-medium border-2">
               {new Intl.NumberFormat("pt-br", {
                 notation: "compact",
                 compactDisplay: "short",
               }).format(+totalRevenue)}
             </TableCell>
-            <TableCell className="font-medium">
+            <TableCell className="font-medium border-2">
               {new Intl.NumberFormat("pt-br", {
                 notation: "compact",
                 compactDisplay: "short",
               }).format(+ebitda)}
             </TableCell>
-            <TableCell className="font-medium">
+            <TableCell className="font-medium border-2">
               {new Intl.NumberFormat("pt-br", {
                 notation: "compact",
                 compactDisplay: "short",
