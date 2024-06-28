@@ -15,7 +15,6 @@ export type StockData = {
 };
 
 const KEY = "import.meta.env.VITE_KEY";
-const key = "cpu1tdhr01qj8qq0vj80cpu1tdhr01qj8qq0vj8g"; //finnhub
 
 function StockPage() {
   const { stockName } = useParams();
@@ -48,8 +47,8 @@ function StockPage() {
   return (
     <div className="min-h-screen w-[40rem] space-y-14 mx-auto ">
       {stockData && <StockInfo stockName={stockName} />}
-      {/* {stockData && <StockChart stockData={stockData} />}
-      {stockData && <BalanceTable />} */}
+      {stockData && <StockChart stockData={stockData} />}
+      {stockData && <BalanceTable />}
     </div>
   );
 }

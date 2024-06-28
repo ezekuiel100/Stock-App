@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -7,25 +6,27 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table";
+import { useQuery } from "@tanstack/react-query";
 
-type DataType = {
-  fiscalDateEnding: string;
-  totalRevenue: string;
-  ebitda: string;
-  netIncome: string;
-};
+async function fetchIncomeStatement() {
+  const res = await fetch(
+    `https://financialmodelingprep.com/api/v3/income-statement/AAPL?period=annual&apikey=${
+      import.meta.env.VITE_KEY
+    }`
+  );
+  const data = await res.json();
+  return data;
+}
 
 function BalanceTable() {
-  const [data, setData] = useState<DataType[]>([]);
+  const { data } = useQuery({
+    queryKey: ["stockBalance"],
+    queryFn: fetchIncomeStatement,
+  });
 
-  useEffect(() => {
-    async function fetchIncomeStatement() {
-      const res = await fetch(`src/data/balance.json`);
-      const data = await res.json();
-      setData(data.annualReports.reverse());
-    }
-    fetchIncomeStatement();
-  }, []);
+  if (!data) return;
+
+  const reverseData = [...data].reverse();
 
   return (
     <Table className="mb-28 bg-white">
@@ -38,17 +39,15 @@ function BalanceTable() {
         </TableRow>
       </TableHeader>
 
-      {data.map(({ fiscalDateEnding, totalRevenue, ebitda, netIncome }, i) => (
+      {reverseData.map(({ calendarYear, revenue, ebitda, netIncome }, i) => (
         <TableBody key={i} className="border-2">
           <TableRow className=" ">
-            <TableCell className="font-medium ">
-              {fiscalDateEnding.slice(0, 4)}
-            </TableCell>
+            <TableCell className="font-medium ">{calendarYear}</TableCell>
             <TableCell className="font-medium border-2">
               {new Intl.NumberFormat("pt-br", {
                 notation: "compact",
                 compactDisplay: "short",
-              }).format(+totalRevenue)}
+              }).format(+revenue)}
             </TableCell>
             <TableCell className="font-medium border-2">
               {new Intl.NumberFormat("pt-br", {
