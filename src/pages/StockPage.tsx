@@ -38,7 +38,7 @@ function StockPage() {
 
   if (!stockData) {
     return (
-      <div className="flex justify-center items-center h-[calc(100vh-5rem)] ">
+      <div className="bg-red-200 flex justify-center items-center h-[calc(100vh-5rem)] ">
         <CircularProgress />
       </div>
     );

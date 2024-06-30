@@ -8,12 +8,12 @@ import {
 } from "./ui/table";
 import { useQuery } from "@tanstack/react-query";
 
+// `https://financialmodelingprep.com/api/v3/income-statement/AAPL?period=annual&apikey=${
+//   import.meta.env.VITE_KEY
+// }`
+
 async function fetchIncomeStatement() {
-  const res = await fetch(
-    `https://financialmodelingprep.com/api/v3/income-statement/AAPL?period=annual&apikey=${
-      import.meta.env.VITE_KEY
-    }`
-  );
+  const res = await fetch(`src/data/balance.json`);
   const data = await res.json();
   return data;
 }
@@ -24,6 +24,7 @@ function BalanceTable() {
     queryFn: fetchIncomeStatement,
   });
 
+  // console.log(data);
   if (!data) return;
 
   const reverseData = [...data].reverse();
