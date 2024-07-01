@@ -16,7 +16,7 @@ function StockCard({ data }: StockProps) {
   const { name, price, symbol } = data;
 
   return (
-    <div className="bg-white w-64 h-36 px-4 py-6 rounded-xl  gap-4 drop-shadow ">
+    <div className="bg-white w-64 mx-auto h-36 px-4 py-6 rounded-xl  gap-4 drop-shadow ">
       <Link to={`/${symbol}`}>
         <div>
           <p className="font-bold text-lg text-center">{symbol}</p>
