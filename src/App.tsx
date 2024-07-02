@@ -1,19 +1,26 @@
 import StockCard from "./components/StockCard";
 import CircularProgress from "@mui/material/CircularProgress";
-import { fetchData } from "./api/fetchData";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 function App() {
-  const [number, setNumber] = useState(1);
+  const [number, setNumber] = useState<number>(1);
+
+  function runWorker() {
+    return new Promise((resolve) => {
+      const myWorker = new Worker("src/api/fetchData.ts");
+      myWorker.onmessage = (e) => {
+        resolve(e.data);
+      };
+    });
+  }
 
   const { data, status, isFetching } = useQuery({
     queryKey: ["stocks"],
-    queryFn: fetchData,
+    queryFn: runWorker,
   });
 
-  console.log(data);
-  const newData = data && data.slice(0, 20 * number);
+  const newData: [] = data && data.slice(0, 20 * number);
 
   return (
     <div className="max-w-[65rem] pb-10 mx-auto ">
@@ -24,7 +31,7 @@ function App() {
       )}
 
       <div className="bg-gray-100 min-h-screen grid  md:grid-cols-2 gap-4 lg:grid-cols-3 mb-6 ">
-        {data &&
+        {newData &&
           newData.map((data, i) => {
             return <StockCard data={data} key={i} />;
           })}
